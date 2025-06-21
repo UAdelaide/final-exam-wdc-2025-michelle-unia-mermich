@@ -132,7 +132,11 @@
 
         onMounted(async () => {
           loadWalks();
-          
+
+          const res = await fetch('/api/users/my-dogs');
+          if (res.ok) {
+            myDogs.value = await res.json();
+          }
         });
 
         return {
@@ -140,7 +144,10 @@
           walks,
           message,
           error,
-          submitWalkRequest
+          submitWalkRequest,
+          selectedDogId,
+          myDogs
+
         };
       }
     }).mount('#app');

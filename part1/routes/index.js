@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 /* health check */
 router.get('/api', function(req, res, next) {
-  res.send('index', { title: 'Express' });
+  res.send('Backend runs successfully!');
 });
 
 module.exports = router;

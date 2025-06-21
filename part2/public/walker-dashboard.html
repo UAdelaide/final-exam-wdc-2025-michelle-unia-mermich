@@ -84,11 +84,23 @@
           loadWalkRequests();
         });
 
+        async function getCurrentUser() {
+          const res = await fetch('/api/users/me');
+          if (res.ok) {
+            const data = await res.json();
+            return data.id;
+          } else {
+            throw new Error('Not logged in');
+          }
+        }
+
+
         return {
           walks,
           message,
           error,
-          applyToWalk
+          applyToWalk,
+          getCurrentUser
         };
       }
     }).mount('#app');

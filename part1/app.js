@@ -18,12 +18,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 (async () => {
     try {
 
-        // Connect to MySQL without specifying a database
-        const connection = await mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '' // Set your MySQL root password
-        });
+    // Connect to MySQL without specifying a database
+    const connection = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: ''
+    });
+
+    await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
+    await connection.end();
 
       db = await mysql.createConnection({
         host: 'localhost',

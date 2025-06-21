@@ -56,6 +56,10 @@ app.use(express.static(path.join(__dirname, 'public')));
     ((SELECT dog_id FROM Dogs WHERE name = 'Biscuit'), '2025-06-21 12:30:00', 30, 'Henley Beach', 'cancelled');
 `);
 app.locals.db = db;
+} catch (err) {
+    console.error('Error setting up database. Ensure Mysql is running: service mysql start', err);
+  }
+})();
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

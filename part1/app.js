@@ -17,7 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 (async () => {
   try {
-    // Step 1: Connect without DB, then create DogWalkService
     const connection = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
@@ -26,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
     await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
     await connection.end();
 
-    // Step 2: Connect to DogWalkService
     const db = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
@@ -34,7 +32,6 @@ app.use(express.static(path.join(__dirname, 'public')));
       database: 'DogWalkService'
     });
 
-    // Step 3: Load and execute dogwalks.sql schema
     const schema = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
     const statements = schema
       .split(';')
@@ -46,7 +43,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
     console.log('Connected to DogWalkService and schema loaded.');
 
-    // Step 4: Insert seed data
     await db.execute(`
       INSERT IGNORE INTO Users (username, email, password_hash, role)
       VALUES

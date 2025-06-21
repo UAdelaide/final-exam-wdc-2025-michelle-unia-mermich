@@ -46,6 +46,16 @@ app.use(express.static(path.join(__dirname, 'public')));
         ((SELECT user_id FROM Users WHERE username = 'eveowner'), 'Biscuit', 'medium');
     `);
 
+    await db.execute(`
+    INSERT INTO WalkRequests (dog_id, requested_time, duration_minutes, location, status)
+    VALUES
+    ((SELECT dog_id FROM Dogs WHERE name = 'Max'), '2025-06-10 08:00:00', 30, 'Parklands', 'open'),
+    ((SELECT dog_id FROM Dogs WHERE name = 'Bella'), '2025-06-10 09:30:00', 45, 'Beachside Ave', 'accepted'),
+    ((SELECT dog_id FROM Dogs WHERE name = 'Cookie'), '2025-06-21 10:30:00', 45, 'Adelaide Rundle Mall', 'accepted'),
+    ((SELECT dog_id FROM Dogs WHERE name = 'Marshmallow'), '2025-06-21 11:30:00', 60, 'Henley Beach', 'open'),
+    ((SELECT dog_id FROM Dogs WHERE name = 'Biscuit'), '2025-06-21 12:30:00', 30, 'Henley Beach', 'cancelled');
+`);
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

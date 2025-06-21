@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Express</title>
-    <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>Dog of the Day - Bad UX</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
-
 <body>
-    <h1>Express</h1>
-    <p>Welcome to Express</p>
+  <div id="app">
+    <div class="container">
+      <div class="dog-section">
+        <h2>{{ title }}</h2>
+        <img :src="dogImage" width="300">
+        <div class="hidden-details" v-if="showDetails">
+          Breed: Unknown<br>
+          Temperament: Secretive<br>
+          Allergies: Possibly all
+        </div>
+        <button @click="showDetails = !showDetails">Click me 4 times to learn more</button>
+        <button @click="fetchDog">Refresh Dog</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref, onMounted } = Vue
+
+    createApp({
+      setup() {
+        const title = ref("DOG OF THE DAY!!!")
+        const dogImage = ref("")
+        const showDetails = ref(false)
+
+        const fetchDog = async () => {
+          const res = await fetch('https://dog.ceo/api/breeds/image/random')
+          const data = await res.json()
+          dogImage.value = data.message
+        }
+
+        onMounted(fetchDog)
+
+        return { title, dogImage, showDetails, fetchDog }
+      }
+    }).mount('#app')
+  </script>
 </body>
 </html>

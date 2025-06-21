@@ -32,7 +32,7 @@ router.get('/api/dogs', async (req, res) => {
   }
 });
 
-router.get('/walkrequests/open', async (req, res) => {
+router.get('/api/walkrequests/open', async (req, res) => {
   try {
     const db = req.app.locals.db;
 
@@ -58,7 +58,7 @@ router.get('/walkrequests/open', async (req, res) => {
   }
 });
 
-router.get('/walkers/summary', async (req, res) => {
+router.get('/api/walkers/summary', async (req, res) => {
   try {
     const db = req.app.locals.db;
 

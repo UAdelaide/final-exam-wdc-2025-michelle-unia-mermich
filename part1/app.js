@@ -34,8 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
         password: '',
         database: 'DogWalkService'
     });
-    const schema = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
-    await db.query(schema);
+
+        const schema = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
+        await db.query(schema);
 
       console.log('Connected to DogWalkService');
 

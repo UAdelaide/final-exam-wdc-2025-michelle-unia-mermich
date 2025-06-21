@@ -36,6 +36,11 @@ app.use(express.static(path.join(__dirname, 'public')));
       ('eveowner', 'eve@example.com', 'hashed654', 'owner');
     `);
 
+        await db.execute(`
+        INSERT IGNORE INTO Dogs (owner_id, name, size)
+        SELECT user_id, 'Max', 'medium' FROM Users WHERE username = 'alice123'
+    `);
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

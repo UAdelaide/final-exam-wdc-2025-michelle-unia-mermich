@@ -47,7 +47,7 @@
     </table>
   </div>
 
-  
+
 </div>
 
 <script>
@@ -58,6 +58,7 @@
       const username = ref('');
       const password = ref('');
       const error = ref('');
+      const dogs = ref([]);
 
       async function handleLogin() {
         try {
@@ -87,6 +88,25 @@
           error.value = 'An error occurred. Please try again.';
         }
       }
+
+      async function fetchDogList() {
+        const res = await fetch('/api/dogs');
+        const dogData = await res.json();
+
+        const dogsWithImages = await Promise.all(
+          dogData.map(async (dog) => {
+            const imgRes = await fetch('https://dog.ceo/api/breeds/image/random');
+            const imgData = await imgRes.json();
+            return {
+              ...dog,
+              image: imgData.message
+            };
+          })
+        );
+
+        dogs.value = dogsWithImages;
+      }
+      
 
       return { username, password, error, handleLogin };
     }

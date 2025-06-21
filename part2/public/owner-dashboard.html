@@ -127,6 +127,9 @@
           }
         }
 
+        const selectedDogId = ref('');
+        const myDogs = ref([]);
+        
         onMounted(() => {
           loadWalks();
         });

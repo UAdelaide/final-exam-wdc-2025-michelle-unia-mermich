@@ -63,8 +63,15 @@
     </div>
     <p v-else>No walk requests yet.</p>
   </div>
+  <button id="logoutBtn" class="btn btn-danger mt-3">Logout</button>
 
   <script>
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch('/api/users/logout', { method: 'POST' });
+      window.location.href = '/';
+    });
+
     const { createApp, ref, onMounted } = Vue;
 
     createApp({

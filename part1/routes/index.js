@@ -58,6 +58,32 @@ router.get('/walkrequests/open', async (req, res) => {
   }
 });
 
+router.get('/walkers/summary', async (req, res) => {
+  try {
+    const db = req.app.locals.db;
+
+    const [rows] = await db.execute(`
+      SELECT
+        u.username AS walker_username,
+        COUNT(r.rating_id) AS total_ratings,
+        ROUND(AVG(r.rating), 1) AS average_rating,
+        COUNT(DISTINCT wr.request_id) AS completed_walks
+      FROM Users u
+      LEFT JOIN WalkRatings r ON u.user_id = r.walker_id
+      LEFT JOIN WalkRequests wr
+        ON wr.request_id = r.request_id AND wr.status = 'completed'
+      WHERE u.role = 'walker'
+      GROUP BY u.user_id
+    `);
+
+    res.json(rows);
+
+  } catch (err) {
+    console.error('Error fetching /api/walkers/summary:', err);
+    res.status(500).json({ error: 'Failed to fetch walker summary.' });
+  }
+});
+
 
 
 

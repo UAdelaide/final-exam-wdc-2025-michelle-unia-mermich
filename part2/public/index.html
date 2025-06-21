@@ -51,7 +51,7 @@
 </div>
 
 <script>
-  const { createApp, ref } = Vue;
+  const { onMounted, createApp, ref } = Vue;
 
   createApp({
     setup() {
@@ -106,7 +106,10 @@
 
         dogs.value = dogsWithImages;
       }
-      
+
+      onMounted(() => {
+        fetchDogList();
+      });
 
       return { username, password, error, handleLogin };
     }

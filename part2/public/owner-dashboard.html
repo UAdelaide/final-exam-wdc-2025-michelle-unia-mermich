@@ -11,6 +11,11 @@
   <div id="app" class="container py-4">
     <h1 class="mb-4 text-primary">Owner Dashboard</h1>
 
+    <select v-model="selectedDogId" class="form-select" required>
+      <option value="">-- Choose a dog --</option>
+      <option v-for="dog in myDogs" :key="dog.dog_id" :value="dog.dog_id">{{ dog.name }}</option>
+    </select>
+
     <!-- Walk request form -->
     <div class="card mb-4">
       <div class="card-header bg-primary text-white">

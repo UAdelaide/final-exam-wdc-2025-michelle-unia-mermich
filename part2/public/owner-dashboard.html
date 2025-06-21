@@ -129,9 +129,10 @@
 
         const selectedDogId = ref('');
         const myDogs = ref([]);
-        
-        onMounted(() => {
+
+        onMounted(async () => {
           loadWalks();
+          
         });
 
         return {

@@ -46,12 +46,22 @@ router.post('/login', async (req, res) => {
     `, [email, password]);
 
     if (rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      return res.redirect('/?error=invalid');
     }
 
-    res.json({ message: 'Login successful', user: rows[0] });
+    req.session.user = {
+      id: rows[0].user_id,
+      username: rows[0].username,
+      role: rows[0].role
+    };
+
+    if (rows[0].role === 'owner') {
+      return res.redirect('/owner-dashboard.html');
+    } else {
+      return res.redirect('/walker.html');
+    }
   } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
+    res.status(500).send('Login failed');
   }
 });
 

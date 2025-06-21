@@ -15,7 +15,18 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+(async () => {
+    try {
+      db = await mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'DogWalkService'
+      });
 
+      console.log('Connected to DogWalkService');
+
+      
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

@@ -55,6 +55,7 @@ app.use(express.static(path.join(__dirname, 'public')));
     ((SELECT dog_id FROM Dogs WHERE name = 'Marshmallow'), '2025-06-21 11:30:00', 60, 'Henley Beach', 'open'),
     ((SELECT dog_id FROM Dogs WHERE name = 'Biscuit'), '2025-06-21 12:30:00', 30, 'Henley Beach', 'cancelled');
 `);
+app.locals.db = db;
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

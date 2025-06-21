@@ -28,12 +28,14 @@ app.use(express.static(path.join(__dirname, 'public')));
     await connection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
     await connection.end();
 
-      db = await mysql.createConnection({
+    const db = await mysql.createConnection({
         host: 'localhost',
         user: 'root',
         password: '',
         database: 'DogWalkService'
-      });
+    });
+    const schema = fs.readFileSync(path.join(__dirname, 'dogwalks.sql'), 'utf8');
+    await db.query(schema);
 
       console.log('Connected to DogWalkService');
 
